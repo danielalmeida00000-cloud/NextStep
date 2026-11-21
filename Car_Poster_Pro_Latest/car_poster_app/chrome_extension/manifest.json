@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Car Poster Pro",
+  "version": "0.2.0",
+  "description": "Help car salespeople prepare and fill Facebook Marketplace vehicle listings from dealership inventory.",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "host_permissions": [
+    "https://www.facebook.com/*",
+    "https://web.facebook.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Car Poster Pro"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.facebook.com/*", "https://web.facebook.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

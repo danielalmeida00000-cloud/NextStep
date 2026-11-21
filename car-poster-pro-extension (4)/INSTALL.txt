@@ -1,0 +1,10 @@
+NextStep Automotive Solutions extension
+
+1. Open chrome://extensions
+2. Turn on Developer mode
+3. Click Load unpacked and choose this folder
+4. Open the NextStep Automotive Solutions desk once, so the extension knows which tab is yours
+5. On a dealer inventory page, click the extension and choose Pull this page
+   (a “Send to NextStep Automotive Solutions” button also shows up on vehicle pages)
+6. On the desk, open the car and click Fill on Facebook
+7. Check the Marketplace form. You press Publish. The extension never does.

@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "NextStep Automotive Solutions",
+  "version": "1.0.0",
+  "description": "Pull a dealer page into NextStep Automotive Solutions and fill the Facebook Marketplace form. You still press Publish.",
+  "action": {
+    "default_title": "NextStep Automotive Solutions",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": ["storage", "tabs", "scripting"],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": [
+        "https://www.facebook.com/*",
+        "https://facebook.com/*",
+        "https://web.facebook.com/*",
+        "https://m.facebook.com/*"
+      ],
+      "js": ["scrape.js", "bridge.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/marketplace/*",
+        "https://facebook.com/marketplace/*",
+        "https://web.facebook.com/marketplace/*",
+        "https://m.facebook.com/marketplace/*"
+      ],
+      "js": ["fill.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
