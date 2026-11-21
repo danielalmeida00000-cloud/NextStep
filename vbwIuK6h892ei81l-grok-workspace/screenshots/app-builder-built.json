@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Car Poster Pro",
+      "hasCanvas": false,
+      "bodyTextLen": 980,
+      "bodyTextHash": "72c84d53dd24934ab1f3b8d550609fe2dcbfaa5571a6de839f50992e0d0ecaf1",
+      "bodyTextPrefix": "Car Poster Pro Red Clay Motors · Kennesaw, GA One car an hour Sa",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Car Poster Pro",
+      "hasCanvas": false,
+      "bodyTextLen": 980,
+      "bodyTextHash": "72c84d53dd24934ab1f3b8d550609fe2dcbfaa5571a6de839f50992e0d0ecaf1",
+      "bodyTextPrefix": "Car Poster Pro Red Clay Motors · Kennesaw, GA One car an hour Sa",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Car Poster Pro",
+      "hasCanvas": false,
+      "bodyTextLen": 659,
+      "bodyTextHash": "184c51dd1990d955a45159a421e1e97b305d2c95c78a80752719671a3eadb423",
+      "bodyTextPrefix": "Car Poster Pro Desk Sign in For one salesperson Post the right c",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/site-home.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Car Poster Pro",
+      "hasCanvas": false,
+      "bodyTextLen": 659,
+      "bodyTextHash": "184c51dd1990d955a45159a421e1e97b305d2c95c78a80752719671a3eadb423",
+      "bodyTextPrefix": "Car Poster Pro Desk Sign in For one salesperson Post the right c",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/site-home-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/site-home.json"
+}

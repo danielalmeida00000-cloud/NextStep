@@ -1,0 +1,29 @@
+---
+description: Build and keep the NextStep pull, Facebook fill, and payment guards
+alwaysApply: true
+---
+
+# Job
+
+Add tests. Do not add features, plan tiers, captions, or texting.
+
+## Dealer pull
+
+Save fixture HTML for a full inventory page, a second pull where one car is gone and one car is new, and a short partial page. Assert miles, price, and VIN still parse. A second full pull marks the missing car sold and the new car arrived. A partial page must not mark the rest of the lot sold.
+
+## Facebook fill
+
+Save a fixture of the Marketplace vehicle form. The fill must select vehicle type, year, and exterior color, and type the VIN. Map dealer color names onto Facebook’s list. A color that is not on the list becomes Other, then the menu closes. The fill never presses Publish.
+
+## Payments
+
+Cover these cases:
+
+- Basic monthly checkout sets a 7-day trial, collects a card, and cancels the trial if the card is missing. Due today is $0.
+- Premium and Premium Plus checkout do not set a trial.
+- `checkout.session.completed` with `no_payment_required` turns Basic on during the trial.
+- `past_due`, `unpaid`, and `customer.subscription.deleted` close the desk.
+- `invoice.paid` leaves the desk open.
+- A new account with no checkout does not get a plan.
+
+Run the tests and fix only what they catch.

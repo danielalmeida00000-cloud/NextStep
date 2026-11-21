@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>NextStep Automotive Solutions</title>
+    <style>
+      body {
+        margin: 0;
+        width: 320px;
+        background: #121410;
+        color: #f2efe6;
+        font: 15px/1.4 "Segoe UI", sans-serif;
+      }
+      main { padding: 14px; }
+      h1 { margin: 0; font-size: 16px; }
+      p { margin: 6px 0 0; color: #9c988c; }
+      button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        min-height: 40px;
+        border-radius: 999px;
+        border: 1px solid #31362c;
+        background: transparent;
+        color: #f2efe6;
+        font: inherit;
+        cursor: pointer;
+      }
+      button.primary { background: #e4a54b; color: #1a1408; border-color: #e4a54b; font-weight: 650; }
+      button:disabled { opacity: 0.6; cursor: wait; }
+      #status { min-height: 2.8em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>NextStep Automotive Solutions</h1>
+      <p id="status">Checking the desk…</p>
+      <button id="pull" class="primary" type="button">Pull this page</button>
+      <button id="market" type="button">Open Facebook form</button>
+      <button id="desk" type="button">Open the desk</button>
+    </main>
+    <script src="scrape.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
