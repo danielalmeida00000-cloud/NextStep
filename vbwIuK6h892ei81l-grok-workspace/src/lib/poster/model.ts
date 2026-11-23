@@ -28,6 +28,8 @@ export type Vehicle = {
   leads: number;
   fromDealer?: boolean;
   dealerHost?: string;
+  /** Normalized inventory page this car was pulled from. Sold detection stays on that page. */
+  dealerPage?: string;
   soldByDealer?: boolean;
   arrivedAt?: string | null;
 };

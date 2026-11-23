@@ -72,16 +72,24 @@ export const usePoster = create<State>()(
         const summary = { arrived: [] as string[], sold: [] as string[], added: 0 };
         set((s) => {
           const host = hostname(url);
+          const page = dealerPage(url);
           const same = !s.dealerUrl || hostname(s.dealerUrl) === host;
           const tracked = s.vehicles.filter((car) => {
             if (!car.fromDealer || car.status !== "stock") return false;
-            if (car.dealerHost) return car.dealerHost === host;
-            return same && hostname(s.dealerUrl) === host;
+            if (car.dealerPage) return car.dealerPage === page;
+            if (car.dealerHost) return car.dealerHost === host && dealerPage(s.dealerUrl) === page;
+            return same && hostname(s.dealerUrl) === host && dealerPage(s.dealerUrl) === page;
           });
           const hadDealerCars = tracked.length > 0;
           const incomingKeys = new Set(incoming.map(carKey));
+          const overlap = tracked.filter((car) => incomingKeys.has(carKey(car))).length;
+          // Sold marks stay on this inventory page. Another page, or a pull that
+          // shares none of its cars, is not proof the rest of the lot left.
           const canMarkSold =
-            hadDealerCars && !truncated && incoming.length > 0 && incoming.length >= Math.ceil(tracked.length * 0.8);
+            hadDealerCars &&
+            !truncated &&
+            overlap > 0 &&
+            incoming.length >= Math.ceil(tracked.length * 0.8);
           const soldIds = new Set<string>();
           if (canMarkSold) {
             for (const car of tracked) {
@@ -113,6 +121,7 @@ export const usePoster = create<State>()(
                     description: car.description || fresh.description,
                     fromDealer: true,
                     dealerHost: host,
+                    dealerPage: page,
                   }
                 : {}),
               status: sold ? ("sold" as const) : car.status,
@@ -123,6 +132,7 @@ export const usePoster = create<State>()(
             ...car,
             fromDealer: true,
             dealerHost: host,
+            dealerPage: page,
             arrivedAt: hadDealerCars ? nowIso : null,
           }));
           vehicles = [...vehicles, ...addedCars];
@@ -294,6 +304,17 @@ export const usePoster = create<State>()(
 function hostname(url: string) {
   try {
     return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url.trim().toLowerCase();
+  }
+}
+
+function dealerPage(url: string) {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, "");
+    const path = parsed.pathname.replace(/\/+$/, "") || "/";
+    return `${parsed.protocol}//${host}${path}${parsed.search}`;
   } catch {
     return url.trim().toLowerCase();
   }

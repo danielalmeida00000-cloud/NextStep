@@ -55,6 +55,22 @@ function assertParsed(vehicles: Vehicle[], vins: string[]) {
   }
 }
 
+function stockVin(n: number) {
+  return `1HGCY2F53MA${String(n).padStart(6, "0")}`;
+}
+
+function inventoryHtml(ids: number[]) {
+  const cars = ids
+    .map((n) => {
+      const vin = stockVin(n);
+      const price = 20000 + n;
+      const mileage = 10000 + n * 100;
+      return `<article data-vin="${vin}" data-year="2020" data-make="Honda" data-model="CR-V" data-trim="EX" data-price="${price}" data-mileage="${mileage}" data-exterior="White"><h2>2020 Honda CR-V EX</h2><p>$${price}</p><p>${mileage} miles</p><p>VIN ${vin}</p></article>`;
+    })
+    .join("");
+  return `<!doctype html><html><body><h1>Used inventory</h1>${cars}</body></html>`;
+}
+
 function pull(html: string, url: string, truncated = false) {
   const parsed = lot(html, url);
   const flag = truncated || parsed.truncated;
@@ -148,6 +164,35 @@ describe("dealer pull", { concurrency: false }, () => {
     assert.equal(gone.soldByDealer ?? false, false);
     for (const car of vehicles) {
       if (car.vin === ROGUE) continue;
+      assert.equal(car.status, "stock");
+      assert.equal(car.soldByDealer ?? false, false);
+    }
+  });
+
+  it("does not mark the whole lot sold from another page on the same dealer", () => {
+    const page1 = "https://northside.example/inventory";
+    const page2 = "https://northside.example/inventory?page=2";
+    pull(inventoryHtml([1, 2, 3, 4, 5]), page1);
+    const { summary, vehicles } = pull(inventoryHtml([6, 7, 8, 9]), page2);
+    assert.deepEqual(summary.sold, []);
+    for (const n of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+      const car = byVin(vehicles, stockVin(n));
+      assert.equal(car.status, "stock");
+      assert.equal(car.soldByDealer ?? false, false);
+    }
+    for (const n of [6, 7, 8, 9]) {
+      assert.equal(byVin(vehicles, stockVin(n)).arrivedAt ?? null, null);
+    }
+  });
+
+  it("does not mark the first page sold when the next page still lists one of its cars", () => {
+    const page1 = "https://northside.example/inventory?page=1";
+    const page2 = "https://northside.example/inventory?page=2";
+    pull(inventoryHtml([1, 2, 3, 4, 5]), page1);
+    const { summary, vehicles } = pull(inventoryHtml([5, 6, 7, 8]), page2);
+    assert.deepEqual(summary.sold, []);
+    for (const n of [1, 2, 3, 4, 5]) {
+      const car = byVin(vehicles, stockVin(n));
       assert.equal(car.status, "stock");
       assert.equal(car.soldByDealer ?? false, false);
     }
